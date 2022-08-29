@@ -1,0 +1,31 @@
+{
+  "files": [
+    {
+      "id": 1,
+      "name": "File 1.jpg",
+      "url": "https://picsum.photos/id/1015/350/200",
+      "mimeType": "image/jpeg"
+    },
+    {
+      "id": 2,
+      "name": "File 2.png",
+      "url": "https://picsum.photos/id/1039/350/200",
+      "mimeType": "image/png"
+    },
+    {
+      "id": 3,
+      "name": "File 3.doc",
+      "mimeType": "application/msword"
+    },
+    {
+      "id": 4,
+      "name": "File 4.pdf",
+      "mimeType": "application/pdf"
+    },
+    {
+      "id": 5,
+      "name": "File 5.xls",
+      "mimeType": "application/vnd.ms-excel"
+    }
+  ]
+}

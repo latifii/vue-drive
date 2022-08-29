@@ -9,7 +9,7 @@
       </button>
     </div>
     <div class="row">
-      <div class="col-md-3" v-for="item in 6">
+      <div class="col-md-3" v-for="item in 6" :key="item">
         <div class="card mb-4">
           <div class="card-body text-center py-5">
             <icon-type-common height="4em" width="4em" />
