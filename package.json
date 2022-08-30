@@ -9,6 +9,7 @@
     "start": "concurrently \"npm run api\" \"npm run dev\""
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "vue": "^3.0.5"
   },
   "devDependencies": {

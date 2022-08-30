@@ -51,9 +51,12 @@
 </template>
 
 <script>
-import ActionBar from "../components/ActionBar.vue";
-
+import ActionBar from '../components/ActionBar.vue';
+import filesApi from '../api/files';
 export default {
   components: { ActionBar },
+  mounted() {
+    filesApi.show(1).then((res) => console.log(res.data));
+  },
 };
 </script>
