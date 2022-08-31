@@ -1,18 +1,12 @@
 <template>
-  <Navbar />
-  <MyFiles />
+  <navbar />
+  <my-files />
 </template>
 
-<script>
+<script setup>
 import MyFiles from "./pages/MyFiles.vue";
 import Navbar from "./components/Navbar.vue";
 
-export default {
-  components: {
-    Navbar,
-    MyFiles,
-  },
-};
 </script>
 
 <style>
