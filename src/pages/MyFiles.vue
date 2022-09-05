@@ -1,6 +1,10 @@
 <template>
   <div class="container py-3">
-    <action-bar />
+    <action-bar
+      :selected-count="selectedItems.length"
+      @remove="handleRemove"
+      @rename="showModal = true"
+    />
 
     <div class="d-flex justify-content-between align-items-center py-2">
       <h6 class="text-muted mb-0">Files</h6>
@@ -9,7 +13,16 @@
     <teleport to="#search-form">
       <search-form v-model="q" />
     </teleport>
-    <files-list :files="files" />
+
+    <files-list :files="files" @select-change="handleSelectChange" />
+
+    <app-modal
+      title="Rename Test"
+      :show="showModal && selectedItems.length === 1"
+      @hide="showModal = false"
+    >
+      <file-rename-form />
+    </app-modal>
   </div>
 </template>
 
@@ -20,19 +33,32 @@ import SearchForm from '../components/SearchForm.vue';
 import FilesList from '../components/files/FilesList.vue';
 import filesApi from '../api/files';
 import { reactive, ref, toRef, watchEffect } from 'vue';
+import { useToast } from 'vue-toast-notification';
+import FileRenameForm from '../components/files/FileRenameForm.vue';
 
 const files = ref([]);
+const showModal = ref(false);
+const selectedItems = ref([]);
 const query = reactive({
   _sort: 'name',
   _order: 'asc',
-  q: ''
+  q: '',
 });
-
-const q = toRef(query,'q')
+const $toast = useToast();
+const q = toRef(query, 'q');
 
 const handleSortChange = (payload) => {
   query._sort = payload.column;
   query._order = payload.order;
+};
+const handleRemove = () => {
+  if (confirm('Are you sure?')) {
+    selectedItems.value.forEach((item) => removeItem(item, files));
+    selectedItems.value.splice(0);
+  }
+};
+const handleSelectChange = (item) => {
+  return (selectedItems.value = Array.from(item));
 };
 
 const fetchFiles = async (query) => {
@@ -43,7 +69,17 @@ const fetchFiles = async (query) => {
     console.log(error);
   }
 };
-
+const removeItem = async (item) => {
+  try {
+    const res = await filesApi.delete(item.id);
+    if (res.status === 200 || res.status === 204) {
+      const index = files.value.findIndex((file) => file.id === item.id);
+      files.value.splice(index, 1);
+      $toast.success('Selected items successfully removed');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 watchEffect(async () => (files.value = await fetchFiles(query)));
-
 </script>

@@ -23,8 +23,18 @@
       "mimeType": "application/pdf"
     },
     {
-      "id": 5,
-      "name": "File 5.xls",
+      "id": 6,
+      "name": "File 6.xls",
+      "mimeType": "application/vnd.ms-excel"
+    },
+    {
+      "id": 7,
+      "name": "File 7.xls",
+      "mimeType": "application/vnd.ms-excel"
+    },
+    {
+      "id": 8,
+      "name": "File 8.xls",
       "mimeType": "application/vnd.ms-excel"
     }
   ]
