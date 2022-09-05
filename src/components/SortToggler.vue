@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import { reactive, defineEmits } from 'vue';
+import { reactive } from 'vue';
 
 const sort = reactive({
   column: 'name',
