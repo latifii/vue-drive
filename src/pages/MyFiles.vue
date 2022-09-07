@@ -21,7 +21,11 @@
       :show="showModal && selectedItems.length === 1"
       @hide="showModal = false"
     >
-      <file-rename-form />
+      <file-rename-form
+        @hide="showModal = false"
+        :file="selectedItems[0]"
+        @file-updated="handleFileUpdated"
+      />
     </app-modal>
   </div>
 </template>
@@ -60,7 +64,13 @@ const handleRemove = () => {
 const handleSelectChange = (item) => {
   return (selectedItems.value = Array.from(item));
 };
-
+const handleFileUpdated = (file) => {
+  const oldFile = selectedItems.value[0];
+  const index = files.value.findIndex((item) => item.id === file.id);
+  files.value.splice(index, 1, file);
+  console.log(oldFile)
+  $toast.success(`File ${oldFile.name} renamed to ${file.name}`);
+};
 const fetchFiles = async (query) => {
   try {
     const { data } = await filesApi.index(query);
