@@ -3,9 +3,7 @@
     class="d-flex justify-content-between align-items-center border-bottom pt-2 pb-3"
     v-show="selectedCount"
   >
-    <button class="btn btn-outline-primary">
-      <icon-upload /> Upload Files
-    </button>
+    <file-chooser @file-choosen="$emit('file-choosen', $event)" />
 
     <div class="action-buttons">
       <button
@@ -31,13 +29,15 @@
 </template>
 
 <script>
+import FileChooser from './uploder/file-chooser/FileChooser.vue';
 export default {
+  components: { FileChooser },
   props: {
     selectedCount: {
       type: Number,
       default: 0,
     },
   },
-  emits: ['remove', 'rename'],
+  emits: ['remove', 'rename','file-choosen'],
 };
 </script>

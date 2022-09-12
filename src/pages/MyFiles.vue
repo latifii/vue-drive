@@ -4,6 +4,7 @@
       :selected-count="selectedItems.length"
       @remove="handleRemove"
       @rename="showModal = true"
+      @file-choosen="choosenFiles = $event"
     />
 
     <div class="d-flex justify-content-between align-items-center py-2">
@@ -27,6 +28,7 @@
         @file-updated="handleFileUpdated"
       />
     </app-modal>
+    <div v-if="choosenFiles.length">uploading...</div>
   </div>
 </template>
 
@@ -36,11 +38,12 @@ import SortToggler from '../components/SortToggler.vue';
 import SearchForm from '../components/SearchForm.vue';
 import FilesList from '../components/files/FilesList.vue';
 import filesApi from '../api/files';
-import { reactive, ref, toRef, watchEffect } from 'vue';
+import {  reactive, ref, toRef, watchEffect } from 'vue';
 import { useToast } from 'vue-toast-notification';
 import FileRenameForm from '../components/files/FileRenameForm.vue';
 
 const files = ref([]);
+const choosenFiles = ref([]);
 const showModal = ref(false);
 const selectedItems = ref([]);
 const query = reactive({
@@ -68,9 +71,10 @@ const handleFileUpdated = (file) => {
   const oldFile = selectedItems.value[0];
   const index = files.value.findIndex((item) => item.id === file.id);
   files.value.splice(index, 1, file);
-  console.log(oldFile)
+  console.log(oldFile);
   $toast.success(`File ${oldFile.name} renamed to ${file.name}`);
 };
+
 const fetchFiles = async (query) => {
   try {
     const { data } = await filesApi.index(query);
@@ -79,6 +83,7 @@ const fetchFiles = async (query) => {
     console.log(error);
   }
 };
+ 
 const removeItem = async (item) => {
   try {
     const res = await filesApi.delete(item.id);
